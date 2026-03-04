@@ -1,20 +1,33 @@
-from django.shortcuts import render, redirect
-from .models import ScanResult
+from django.contrib import admin
+from .models import Scan, ThermographicFeature, AIPrediction, ExplainabilityMap, FootRegionAnalysis
 
-def show_scanner(request):
-    if request.method == "POST":
-        temperature = request.POST.get("temperature")
-        status = request.POST.get("status")
 
-        ScanResult.objects.create(
-            temperature=temperature,
-            status=status
-        )
+@admin.register(Scan)
+class ScanAdmin(admin.ModelAdmin):
+    list_display  = ('id', 'patient_name', 'patient_id', 'patient_age', 'source', 'created_at')
+    list_filter   = ('source', 'created_at')
+    search_fields = ('patient_name', 'patient_id')
+    ordering      = ('-created_at',)
 
-        return redirect("/")
 
-    results = ScanResult.objects.all()
-    context = {
-        "results": results
-    }
-    return render(request, "scanner.html", context)
+@admin.register(AIPrediction)
+class AIPredictionAdmin(admin.ModelAdmin):
+    list_display  = ('scan', 'diagnosis', 'confidence', 'risk_level', 'predicted_at')
+    list_filter   = ('diagnosis', 'risk_level')
+    ordering      = ('-predicted_at',)
+
+
+@admin.register(ThermographicFeature)
+class ThermographicFeatureAdmin(admin.ModelAdmin):
+    list_display = ('scan', 'left_mean', 'right_mean', 'delta_mean', 'asymmetry_max')
+
+
+@admin.register(FootRegionAnalysis)
+class FootRegionAnalysisAdmin(admin.ModelAdmin):
+    list_display = ('scan', 'side', 'region', 'mean_temp', 'delta_temp')
+    list_filter  = ('side', 'region')
+
+
+@admin.register(ExplainabilityMap)
+class ExplainabilityMapAdmin(admin.ModelAdmin):
+    list_display = ('scan',)

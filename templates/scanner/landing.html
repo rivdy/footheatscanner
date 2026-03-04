@@ -1,5 +1,5 @@
 {% extends 'scanner/base.html' %}
-{% block title %}Landing | Grad-CAM Foot Visualization Lab{% endblock %}
+{% block title %}Landing | Thermal Foot Scanner{% endblock %}
 
 {% block content %}
 <main>
@@ -7,20 +7,21 @@
 <section id="landing" class="section hero">
   <div class="hero-text">
     <p class="eyebrow">Clinical • Neutral • Transparent</p>
-    <h1>Live Grad-CAM Focus from Foot Heat Scanner</h1>
+    <h1>Thermal Foot Scanner for DPN & PAD Diagnostics</h1>
     <p class="subhead">
-      Directly linked to the foot heat scanner. No uploads needed.
-      See where the model focuses in real time.
+      Upload thermal foot images and temperature data to get
+      AI-powered analysis for Diabetic Peripheral Neuropathy
+      and Peripheral Arterial Disease.
     </p>
 
     <div class="cta-row">
-      <a class="btn primary" href="{% url 'scanner' %}">Start Live Scan</a>
+      <a class="btn primary" href="{% url 'scanner' %}">Start Scan</a>
       <a class="btn ghost" href="#explainability">Learn about Grad-CAM</a>
     </div>
 
     <div class="hero-status">
-      <span class="pill success">Scanner Connected</span>
-      <span class="pill info">Live feed enabled</span>
+      <span class="pill success">System Ready</span>
+      <span class="pill info">Upload enabled</span>
     </div>
 
     <div class="disclaimer">
@@ -30,7 +31,7 @@
 
   <div class="hero-media card glassy">
     <div class="image-frame overlay-sample large"></div>
-    <div class="caption">Sample Grad-CAM overlay from the scanner.</div>
+    <div class="caption">Sample Grad-CAM overlay from thermal scan.</div>
   </div>
 </section>
 
@@ -38,7 +39,7 @@
   <div class="card small">
     <div class="label">Original input</div>
     <div class="image-frame original-sample"></div>
-    <p class="muted">Raw image used as model input.</p>
+    <p class="muted">Raw thermal image used as model input.</p>
   </div>
 
   <div class="card small">
@@ -57,106 +58,41 @@
 <section id="upload" class="section upload">
   <div class="card upload-card gradient">
     <div class="image-frame placeholder">
-      <div class="placeholder-text">Live feed placeholder</div>
+      <div class="placeholder-text">Upload your thermal scan to begin</div>
     </div>
 
     <div class="upload-copy">
-      <h2>Live feed from Foot Heat Scanner</h2>
-      <p>The scanner is connected and ready to stream foot images for Grad-CAM visualization.</p>
+      <h2>Thermal Foot Scan Analysis</h2>
+      <p>Upload paired thermal images and CSV temperature data for both feet to receive AI-powered DPN & PAD analysis.</p>
 
       <div class="status-stack">
         <div class="status-row">
-          <span class="pill success">Connected</span>
-          <span class="muted">USB / BLE link active</span>
+          <span class="pill success">System Ready</span>
+          <span class="muted">Upload PNG + CSV kaki kiri & kanan</span>
         </div>
         <div class="status-row">
-          <span class="pill info">Awaiting frame</span>
-          <span class="muted">New images visualized automatically</span>
+          <span class="pill info">ML Model Active</span>
+          <span class="muted">Rule-based thermal analysis</span>
         </div>
         <div class="status-row">
-          <span class="pill neutral">No manual upload</span>
-          <span class="muted">Data flows directly from scanner</span>
+          <span class="pill neutral">Total Scans: {{ total_scans }}</span>
+          <span class="muted">Data tersimpan di database</span>
         </div>
       </div>
 
       <p class="muted">
         No medical decisions are made. This system visualizes model attention only.
       </p>
+
+      <a class="btn primary" href="{% url 'scanner' %}">Start Scan Now</a>
     </div>
   </div>
 
   <div class="steps">
     <span class="step active">Landing</span>
-    <span class="step active">Live Intake</span>
+    <span class="step">Upload</span>
     <span class="step">Processing</span>
     <span class="step">Results</span>
-  </div>
-</section>
-
-<section id="processing" class="section processing card">
-  <div class="progress">
-    <div class="progress-bar" style="width: 65%;"></div>
-  </div>
-  <h3>Receiving frame & generating activation map</h3>
-  <p class="muted">
-    Processing images from the foot heat scanner and preparing Grad-CAM visualization.
-  </p>
-</section>
-
-<section id="results" class="section results">
-  <div class="results-grid">
-
-    <div class="card visuals">
-      <div class="tab-list">
-        <button class="tab active" data-target="view-original">Original Image</button>
-        <button class="tab" data-target="view-heatmap">Heatmap Only</button>
-        <button class="tab" data-target="view-overlay">Overlay Image</button>
-      </div>
-
-      <div class="tab-panels">
-        <div id="view-original" class="tab-panel active">
-          <div class="image-frame original-sample"></div>
-          <div class="caption">Original input image.</div>
-        </div>
-
-        <div id="view-heatmap" class="tab-panel">
-          <div class="image-frame heatmap-sample"></div>
-          <div class="caption">Regions with higher activation intensity.</div>
-        </div>
-
-        <div id="view-overlay" class="tab-panel">
-          <div class="image-frame overlay-sample"></div>
-          <div class="caption">Grad-CAM overlay on original image.</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card outputs">
-      <h3>Model Outputs</h3>
-
-      <div class="output-row">
-        <div class="label">Predicted class</div>
-        <div class="value">Heel Region Attention</div>
-      </div>
-
-      <div class="output-row">
-        <div class="label">Confidence</div>
-        <div class="value">82%</div>
-        <div class="confidence-bar">
-          <div class="confidence-fill" style="width: 82%;"></div>
-        </div>
-      </div>
-
-      <div class="output-note">
-        <p>This visualization shows where the model focused.</p>
-        <p class="muted">Attention does not equal diagnosis.</p>
-      </div>
-
-      <div class="footnote">
-        Heatmap colors are derived from Grad-CAM output.
-      </div>
-    </div>
-
   </div>
 </section>
 
@@ -178,47 +114,58 @@
       <h3>What is Grad-CAM?</h3>
       <p>
         A technique that highlights which image regions most influenced
-        the model’s prediction.
+        the model's prediction. Useful for understanding where temperature
+        anomalies are detected on the foot.
       </p>
     </div>
 
     <div class="card">
       <h3>What this visualization shows</h3>
       <p>
-        Areas where the model placed greater attention during inference.
+        Areas where the thermal analysis placed greater attention during
+        inference — such as asymmetry between left and right foot zones.
       </p>
     </div>
   </div>
 </section>
 
+<!-- Riwayat Scan — data real dari database -->
 <section id="history" class="section history">
   <div class="section-header">
-    <h2>Demo / Sample History</h2>
-    <p class="muted">Sample visualizations for demonstration only.</p>
+    <h2>Recent Scans</h2>
+    <p class="muted">Riwayat scan terbaru dari sistem.</p>
   </div>
 
+  {% if latest_scan %}
   <div class="history-grid">
-    <div class="card history-item">
-      <div class="badge">Sample</div>
-      <div class="image-frame overlay-sample small"></div>
-      <div class="label">Arch Focus</div>
-      <div class="muted">Confidence: 76%</div>
-    </div>
 
     <div class="card history-item">
-      <div class="badge">Sample</div>
-      <div class="image-frame overlay-sample small alt1"></div>
-      <div class="label">Toe Focus</div>
-      <div class="muted">Confidence: 64%</div>
+      <div class="badge">Latest</div>
+
+      {% if latest_scan.image_left %}
+        <img src="{{ latest_scan.image_left.url }}" class="image-frame small" alt="Latest scan left foot">
+      {% else %}
+        <div class="image-frame overlay-sample small"></div>
+      {% endif %}
+
+      <div class="label">{{ latest_scan.patient_name }}</div>
+      <div class="muted">{{ latest_scan.created_at|date:"d M Y" }}</div>
+
+      {% if latest_scan.prediction %}
+        <div class="label">{{ latest_scan.prediction.diagnosis }}</div>
+        <div class="muted">Confidence: {{ latest_scan.prediction.confidence }}%</div>
+      {% endif %}
+
+      <a href="{% url 'results' latest_scan.id %}" class="btn ghost" style="margin-top:8px;">Lihat Detail</a>
     </div>
 
-    <div class="card history-item">
-      <div class="badge">Sample</div>
-      <div class="image-frame overlay-sample small alt2"></div>
-      <div class="label">Heel Focus</div>
-      <div class="muted">Confidence: 81%</div>
-    </div>
   </div>
+  {% else %}
+  <div class="card" style="text-align:center; padding:40px;">
+    <p class="muted">Belum ada scan. <a href="{% url 'scanner' %}">Mulai scan pertama</a>.</p>
+  </div>
+  {% endif %}
+
 </section>
 
 </main>

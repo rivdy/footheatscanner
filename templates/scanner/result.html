@@ -17,6 +17,77 @@
       <div class="value">{{ prediction.confidence }}%</div>
     </div>
 
+    <div class="output-row">
+      <div class="label">Risk Level</div>
+      <div class="value">{{ prediction.risk_level }}</div>
+    </div>
+
+    <hr>
+
+    <h3>Thermal Analysis</h3>
+
+    <div class="output-row">
+      <div class="label">PAD Score</div>
+      <div class="value">{{ prediction.pad_score }}</div>
+    </div>
+
+    <div class="output-row">
+      <div class="label">DPN Score</div>
+      <div class="value">{{ prediction.dpn_score }}</div>
+    </div>
+
+    <div class="output-row">
+      <div class="label">Left Mean Temperature</div>
+      <div class="value">{{ features.left_mean }} °C</div>
+    </div>
+
+    <div class="output-row">
+      <div class="label">Right Mean Temperature</div>
+      <div class="value">{{ features.right_mean }} °C</div>
+    </div>
+
+    <div class="output-row">
+      <div class="label">Temperature Delta</div>
+      <div class="value">{{ features.delta_mean }} °C</div>
+    </div>
+
+    <div class="output-row">
+      <div class="label">Symmetry Index</div>
+      <div class="value">{{ features.symmetry_index }}</div>
+    </div>
+
+    <div class="output-row">
+      <div class="label">Max Asymmetry</div>
+      <div class="value">{{ features.asymmetry_max }} °C</div>
+    </div>
+
+    <hr>
+
+    <h3>Attention Maps</h3>
+
+    <div style="display:flex; gap:20px; flex-wrap:wrap;">
+      {% if explainability.heatmap_left %}
+      <div>
+        <h4>Left Foot</h4>
+        <img src="{{ explainability.heatmap_left.url }}" width="300" alt="Left heatmap">
+      </div>
+      {% endif %}
+
+      {% if explainability.heatmap_right %}
+      <div>
+        <h4>Right Foot</h4>
+        <img src="{{ explainability.heatmap_right.url }}" width="300" alt="Right heatmap">
+      </div>
+      {% endif %}
+    </div>
+
+    <hr>
+
+    <div style="display:flex; gap:12px; margin-top:16px;">
+      <a href="{% url 'scanner' %}" class="btn primary">Scan Baru</a>
+      <a href="{% url 'landing' %}" class="btn secondary">Kembali ke Home</a>
+    </div>
+
   </div>
 </section>
 {% endblock %}

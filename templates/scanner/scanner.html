@@ -10,11 +10,62 @@
 
       <h2>Foot Heat Scan</h2>
 
-      <input type="file" name="image" required>
+      {% if messages %}
+        {% for message in messages %}
+          <div class="alert alert-error">{{ message }}</div>
+        {% endfor %}
+      {% endif %}
+
+      <!-- Data Pasien -->
+      <div class="form-group">
+        <label for="patient_name">Nama Pasien</label>
+        <input type="text" id="patient_name" name="patient_name" placeholder="Nama lengkap pasien" required>
+      </div>
+
+      <div class="form-group">
+        <label for="patient_age">Usia</label>
+        <input type="number" id="patient_age" name="patient_age" placeholder="Usia (tahun)" min="1" max="120">
+      </div>
+
+      <div class="form-group">
+        <label for="patient_id">ID Pasien</label>
+        <input type="text" id="patient_id" name="patient_id" placeholder="Contoh: DM004">
+      </div>
+
+      <hr>
+
+      <!-- Upload Kaki Kiri -->
+      <h4>🦶 Kaki Kiri</h4>
+
+      <div class="form-group">
+        <label for="png_left">Gambar Thermal Kiri (.png / .jpg)</label>
+        <input type="file" id="png_left" name="png_left" accept=".png,.jpg,.jpeg" required>
+      </div>
+
+      <div class="form-group">
+        <label for="csv_left">Data Suhu Kiri (.csv)</label>
+        <input type="file" id="csv_left" name="csv_left" accept=".csv" required>
+      </div>
+
+      <hr>
+
+      <!-- Upload Kaki Kanan -->
+      <h4>🦶 Kaki Kanan</h4>
+
+      <div class="form-group">
+        <label for="png_right">Gambar Thermal Kanan (.png / .jpg)</label>
+        <input type="file" id="png_right" name="png_right" accept=".png,.jpg,.jpeg" required>
+      </div>
+
+      <div class="form-group">
+        <label for="csv_right">Data Suhu Kanan (.csv)</label>
+        <input type="file" id="csv_right" name="csv_right" accept=".csv" required>
+      </div>
 
       <button class="btn primary" type="submit">
         Run Scan
       </button>
+
     </form>
 
   </div>

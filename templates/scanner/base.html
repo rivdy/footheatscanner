@@ -3,6 +3,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>{% block title %}Foot Heat Scanner{% endblock %}</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -14,9 +15,9 @@
 <body>
 
 <header class="top-nav">
-  <div class="brand">Grad-CAM Foot Visualization Lab</div>
+  <div class="brand">Thermal Foot Scanner — DPN & PAD Diagnostics</div>
   <nav>
-    <a href="{% url 'landing' %}">Landing</a>
+    <a href="{% url 'landing' %}">Home</a>
     <a href="{% url 'scanner' %}">Scan</a>
   </nav>
 </header>
@@ -24,8 +25,8 @@
 {% block content %}{% endblock %}
 
 <footer class="footer">
-  <div>Grad-CAM Foot Visualization Lab</div>
-  <div class="muted">Visualization tool only. No diagnostic claims.</div>
+  <div>Thermal Foot Scanner — DPN & PAD Diagnostics</div>
+  <div class="muted">Visualization tool only. Not a substitute for medical diagnosis.</div>
 </footer>
 
 <script src="{% static 'js/script.js' %}"></script>
