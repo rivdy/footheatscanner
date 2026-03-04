@@ -9,3 +9,4 @@ pillow>=10.2
 pandas>=2.2
 opencv-python-headless>=4.9
 matplotlib>=3.8
+dj-database-url>=2.1

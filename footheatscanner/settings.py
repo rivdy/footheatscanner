@@ -28,7 +28,7 @@ INSTALLED_APPS = [
 # ── Middleware ────────────────────────────────────────────
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
-    'whitenoise.middleware.WhiteNoiseMiddleware',       # static files di production
+    'whitenoise.middleware.WhiteNoiseMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
@@ -58,10 +58,22 @@ TEMPLATES = [
 WSGI_APPLICATION = 'footheatscanner.wsgi.application'
 
 # ── Database ──────────────────────────────────────────────
-if PRODUCTION:
+# Prioritas: DATABASE_URL (Render) → manual PostgreSQL → SQLite (lokal)
+DATABASE_URL = os.getenv("DATABASE_URL")
+
+if DATABASE_URL:
+    import dj_database_url
+    DATABASES = {
+        "default": dj_database_url.config(
+            default=DATABASE_URL,
+            conn_max_age=600,
+            ssl_require=True,
+        )
+    }
+elif PRODUCTION:
     DATABASES = {
         "default": {
-            "ENGINE": "django.db.backends.postgresql",
+            "ENGINE":   "django.db.backends.postgresql",
             "NAME":     os.getenv("DB_NAME"),
             "USER":     os.getenv("DB_USER"),
             "PASSWORD": os.getenv("DB_PASSWORD"),
@@ -76,7 +88,7 @@ else:
     DATABASES = {
         "default": {
             "ENGINE": "django.db.backends.sqlite3",
-            "NAME": BASE_DIR / "db.sqlite3",
+            "NAME":   BASE_DIR / "db.sqlite3",
         }
     }
 
@@ -97,7 +109,7 @@ USE_TZ = True
 # ── Static & Media ────────────────────────────────────────
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [BASE_DIR / 'static']
-STATIC_ROOT = BASE_DIR / 'staticfiles'          # dipakai saat collectstatic
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 
 MEDIA_URL = '/media/'
@@ -105,7 +117,5 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 # ── Misc ──────────────────────────────────────────────────
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-# Upload size max 20 MB (gambar thermal bisa besar)
 DATA_UPLOAD_MAX_MEMORY_SIZE = 20 * 1024 * 1024
 FILE_UPLOAD_MAX_MEMORY_SIZE = 20 * 1024 * 1024

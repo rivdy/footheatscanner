@@ -4,3 +4,7 @@ __pycache__/
 *.pyc
 .DS_Store
 *.csv
+.env
+db.sqlite3
+media/
+staticfiles/
