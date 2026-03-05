@@ -13,7 +13,10 @@ PRODUCTION = os.getenv("PRODUCTION", "False").lower() == "true"
 DEBUG = not PRODUCTION
 
 ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS", "localhost,127.0.0.1").split(",")
-
+CSRF_TRUSTED_ORIGINS = os.getenv(
+    "CSRF_TRUSTED_ORIGINS",
+    "http://localhost:8000"
+).split(",")
 # ── Apps ──────────────────────────────────────────────────
 INSTALLED_APPS = [
     'scanner',
