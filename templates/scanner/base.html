@@ -11,11 +11,32 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
 
   <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
+  <style>
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-weight: 600;
+      font-size: 1rem;
+      text-decoration: none;
+      color: inherit;
+    }
+    .brand-logo {
+      width: 36px;
+      height: 36px;
+      object-fit: contain;
+    }
+  </style>
 </head>
 <body>
 
 <header class="top-nav">
-  <div class="brand">Thermal Foot Scanner — DPN & PAD Diagnostics</div>
+  <a href="{% url 'landing' %}" class="brand">
+    <img src="{% static 'img/logo.png' %}" alt="Logo" class="brand-logo"
+         onerror="this.style.display='none'">
+    Thermal Foot Scanner
+  </a>
   <nav>
     <a href="{% url 'landing' %}">Home</a>
     <a href="{% url 'scanner' %}">Scan</a>
@@ -25,7 +46,12 @@
 {% block content %}{% endblock %}
 
 <footer class="footer">
-  <div>Thermal Foot Scanner — DPN & PAD Diagnostics</div>
+  <div style="display:flex; align-items:center; gap:8px;">
+    <img src="{% static 'img/logo.png' %}" alt="Logo"
+         style="width:24px; height:24px; object-fit:contain;"
+         onerror="this.style.display='none'">
+    Thermal Foot Scanner — DPN & PAD Diagnostics
+  </div>
   <div class="muted">Visualization tool only. Not a substitute for medical diagnosis.</div>
 </footer>
 

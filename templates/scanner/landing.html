@@ -1,3 +1,4 @@
+{% load static %}
 {% extends 'scanner/base.html' %}
 {% block title %}Landing | Thermal Foot Scanner{% endblock %}
 
@@ -30,7 +31,12 @@
   </div>
 
   <div class="hero-media card glassy">
-    <div class="image-frame overlay-sample large"></div>
+    <!-- Gambar thermal foot sample -->
+    <img src="{% static 'img/sample_foot.png' %}"
+         alt="Sample thermal foot scan"
+         style="width:100%; height:auto; border-radius:12px; object-fit:cover;"
+         onerror="this.parentElement.querySelector('.image-frame').style.display='flex'; this.style.display='none';">
+    <div class="image-frame overlay-sample large" style="display:none;"></div>
     <div class="caption">Sample Grad-CAM overlay from thermal scan.</div>
   </div>
 </section>
@@ -57,10 +63,6 @@
 
 <section id="upload" class="section upload">
   <div class="card upload-card gradient">
-    <div class="image-frame placeholder">
-      <div class="placeholder-text">Upload your thermal scan to begin</div>
-    </div>
-
     <div class="upload-copy">
       <h2>Thermal Foot Scan Analysis</h2>
       <p>Upload paired thermal images and CSV temperature data for both feet to receive AI-powered DPN & PAD analysis.</p>
@@ -99,12 +101,9 @@
 <section id="explainability" class="section explain">
   <div class="card explain-banner">
     <div class="image-frame overlay-sample large"></div>
-
     <div class="legend">
       <span class="legend-label">Low attention</span>
-      <div class="legend-bar">
-        <span class="legend-grad"></span>
-      </div>
+      <div class="legend-bar"><span class="legend-grad"></span></div>
       <span class="legend-label">High attention</span>
     </div>
   </div>
@@ -112,24 +111,15 @@
   <div class="explain-cards">
     <div class="card">
       <h3>What is Grad-CAM?</h3>
-      <p>
-        A technique that highlights which image regions most influenced
-        the model's prediction. Useful for understanding where temperature
-        anomalies are detected on the foot.
-      </p>
+      <p>A technique that highlights which image regions most influenced the model's prediction.</p>
     </div>
-
     <div class="card">
       <h3>What this visualization shows</h3>
-      <p>
-        Areas where the thermal analysis placed greater attention during
-        inference — such as asymmetry between left and right foot zones.
-      </p>
+      <p>Areas where the thermal analysis placed greater attention — such as asymmetry between left and right foot zones.</p>
     </div>
   </div>
 </section>
 
-<!-- Riwayat Scan — data real dari database -->
 <section id="history" class="section history">
   <div class="section-header">
     <h2>Recent Scans</h2>
@@ -138,34 +128,27 @@
 
   {% if latest_scan %}
   <div class="history-grid">
-
     <div class="card history-item">
       <div class="badge">Latest</div>
-
       {% if latest_scan.image_left %}
-        <img src="{{ latest_scan.image_left.url }}" class="image-frame small" alt="Latest scan left foot">
+        <img src="{{ latest_scan.image_left.url }}" class="image-frame small" alt="Latest scan">
       {% else %}
         <div class="image-frame overlay-sample small"></div>
       {% endif %}
-
       <div class="label">{{ latest_scan.patient_name }}</div>
       <div class="muted">{{ latest_scan.created_at|date:"d M Y" }}</div>
-
       {% if latest_scan.prediction %}
         <div class="label">{{ latest_scan.prediction.diagnosis }}</div>
         <div class="muted">Confidence: {{ latest_scan.prediction.confidence }}%</div>
       {% endif %}
-
       <a href="{% url 'results' latest_scan.id %}" class="btn ghost" style="margin-top:8px;">Lihat Detail</a>
     </div>
-
   </div>
   {% else %}
   <div class="card" style="text-align:center; padding:40px;">
     <p class="muted">Belum ada scan. <a href="{% url 'scanner' %}">Mulai scan pertama</a>.</p>
   </div>
   {% endif %}
-
 </section>
 
 </main>
