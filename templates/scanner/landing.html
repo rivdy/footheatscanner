@@ -1,8 +1,8 @@
-{% load static %}
 {% extends 'scanner/base.html' %}
 {% block title %}Landing | Thermal Foot Scanner{% endblock %}
 
 {% block content %}
+{% load static %}
 <main>
 
 <section id="landing" class="section hero">
@@ -31,12 +31,9 @@
   </div>
 
   <div class="hero-media card glassy">
-    <!-- Gambar thermal foot sample -->
     <img src="{% static 'img/sample_foot.png' %}"
          alt="Sample thermal foot scan"
-         style="width:100%; height:auto; border-radius:12px; object-fit:cover;"
-         onerror="this.parentElement.querySelector('.image-frame').style.display='flex'; this.style.display='none';">
-    <div class="image-frame overlay-sample large" style="display:none;"></div>
+         style="width:100%; max-height:450px; border-radius:12px; object-fit:contain; display:block; margin:0 auto;">
     <div class="caption">Sample Grad-CAM overlay from thermal scan.</div>
   </div>
 </section>
@@ -63,6 +60,10 @@
 
 <section id="upload" class="section upload">
   <div class="card upload-card gradient">
+    <div class="image-frame placeholder">
+      <div class="placeholder-text">Upload your thermal scan to begin</div>
+    </div>
+
     <div class="upload-copy">
       <h2>Thermal Foot Scan Analysis</h2>
       <p>Upload paired thermal images and CSV temperature data for both feet to receive AI-powered DPN & PAD analysis.</p>
@@ -111,11 +112,14 @@
   <div class="explain-cards">
     <div class="card">
       <h3>What is Grad-CAM?</h3>
-      <p>A technique that highlights which image regions most influenced the model's prediction.</p>
+      <p>A technique that highlights which image regions most influenced
+      the model's prediction. Useful for understanding where temperature
+      anomalies are detected on the foot.</p>
     </div>
     <div class="card">
       <h3>What this visualization shows</h3>
-      <p>Areas where the thermal analysis placed greater attention — such as asymmetry between left and right foot zones.</p>
+      <p>Areas where the thermal analysis placed greater attention during
+      inference — such as asymmetry between left and right foot zones.</p>
     </div>
   </div>
 </section>
@@ -131,7 +135,7 @@
     <div class="card history-item">
       <div class="badge">Latest</div>
       {% if latest_scan.image_left %}
-        <img src="{{ latest_scan.image_left.url }}" class="image-frame small" alt="Latest scan">
+        <img src="{{ latest_scan.image_left.url }}" class="image-frame small" alt="Latest scan left foot">
       {% else %}
         <div class="image-frame overlay-sample small"></div>
       {% endif %}
